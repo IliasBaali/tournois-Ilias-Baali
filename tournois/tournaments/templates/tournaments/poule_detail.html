@@ -1,0 +1,15 @@
+{% if poule %}
+    <p> {{poule}} : </p>
+    {% if poule.teams %}
+        <ul>
+        {% for team in poule.teams.all %}
+            <li>Equipe {{team.name}}, entraînée par {{team.coach_name}}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Cette poule ne contient aucun équipe actuellement.
+        </p> 
+    {%endif%}
+{% else %}
+    <p>Cette poule n'existe pas.</p>
+{% endif %}

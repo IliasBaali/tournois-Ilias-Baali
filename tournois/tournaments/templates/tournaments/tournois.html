@@ -2,7 +2,7 @@
 {% if tournois_list %}
     <ul>
     {% for tournoi in tournois_list %}
-        <li>{{tournoi.name}}</li>
+        <li><a href="{% url 'tournaments:tournoi_detail' tournoi.id %}">{{tournoi.name}}</a></li>
     {% endfor %}
     </ul>
 {% else %}

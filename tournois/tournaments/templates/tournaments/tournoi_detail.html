@@ -1,0 +1,13 @@
+{% if tournoi %}
+    {% if tournoi.poule_set %}
+        <ul>
+        {% for poule in tournoi.poule_set.all %}
+            <li><a href="{% url 'tournaments:poule_detail' poule.id%}">{{poule}}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No pool in this tournament.</p> 
+    {%endif%}
+{% else %}
+    <p>This tournament does not exist.</p>
+{% endif %}
