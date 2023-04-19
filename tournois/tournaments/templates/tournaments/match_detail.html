@@ -10,6 +10,26 @@
             <td>{{match.score_1}}</td>
             <td>{{match.score_2}}</td>
         </table>
+
+        <p>Commentaires : </p>
+        {%if match.commentaire_set.all%}
+            {%for comment in match.commentaire_set.all%}
+                <p> {{comment.author}} a écrit : </br> {{comment.content}} </p>
+            {% endfor%}
+        {% else %}
+            <p> {{comment.author}} a écrit : </br> {{comment.content}} </p>
+        {% endif%}
+        {%if form%}
+        <div>
+            <form action="{%url 'tournaments:match_detail' match.id%}" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        {%else%}
+            <p>Vous devez être connecté pour laisser un commentaire.</p>
+        {%endif%}
 {% else %}
     <p>Ce match n'existe pas.</p>
 {% endif %}

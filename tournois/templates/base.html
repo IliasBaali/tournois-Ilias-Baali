@@ -13,10 +13,12 @@
                 {% if username %}
                     <p>Bonjour {{username}}</p>
                     <form action="{%url 'logout'%}">
+                        <input type="hidden" name="next" value="{{ request.path }}">
                         <button type="submit">Déconnection</button>
                     </form>
                 {% else %}
                     <form action="{%url 'login'%}">
+                        <input type="hidden" name="next" value="{{ request.path }}">
                         <button type="submit">Connection</button>
                     </form>
                 {% endif %}

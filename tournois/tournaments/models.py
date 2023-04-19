@@ -47,3 +47,10 @@ class Match(models.Model):
         return str(self.team_1) + " VS " + str(self.team_2)
     
     
+class Commentaire(models.Model):
+    author = models.CharField(max_length=200)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    date_time = models.DateTimeField('Publication date', auto_now=False, auto_now_add=False)
+    content = models.CharField(max_length=500)
+    def __str__(self) -> str:
+        return self.content
