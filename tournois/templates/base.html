@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Tournois{% endblock %}</title>
+</head>
+
+<body>
+    <div>
+        <div >
+            <header>
+                {% if username %}
+                    <p>Bonjour {{username}}</p>
+                    <form action="{%url 'logout'%}">
+                        <button type="submit">Déconnection</button>
+                    </form>
+                {% else %}
+                    <form action="{%url 'login'%}">
+                        <button type="submit">Connection</button>
+                    </form>
+                {% endif %}
+            </header>
+        </div>
+
+        {% block content %}{% endblock %}
+
+        <div>
+            <footer>
+                <em>&copy; ISAE-SUPAERO</em>
+            </footer>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,13 +1,6 @@
-{% if username %}
-    <p>Bonjour {{username}}</p>
-    <form action="{%url 'logout'%}">
-        <button type="submit">Déconnection</button>
-    </form>
-{% else %}
-    <form action="{%url 'login'%}">
-        <button type="submit">Connection</button>
-    </form>
-{% endif %}
+{% extends 'base.html' %}
+{% block content %}
+
 {% if tournois_list %}
     <ul>
     {% for tournoi in tournois_list %}
@@ -17,3 +10,4 @@
 {% else %}
     <p>No tournament are available.</p>
 {% endif %}
+{% endblock content %}

@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 {% if tournoi %}
     {% if tournoi.poule_set %}
         <ul>
@@ -11,3 +14,4 @@
 {% else %}
     <p>This tournament does not exist.</p>
 {% endif %}
+{% endblock content %}

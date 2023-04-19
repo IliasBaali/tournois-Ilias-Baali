@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 {% if poule %}
     <p> Equipes de la {{poule}} : </p>
     {% if poule.teams %}
@@ -22,3 +25,4 @@
 {% else %}
     <p>Cette poule n'existe pas.</p>
 {% endif %}
+{% endblock content %}
