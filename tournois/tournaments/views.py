@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http import Http404,HttpResponse
-from .models import Tournoi, Poule
+from .models import Tournoi, Poule, Match
 
 # Create your views here.
 def tournois(request):
@@ -14,3 +14,8 @@ def tournoiDetail(request, tournament_id):
 def pouleDetail(request, pool_id):
     pool = get_object_or_404(Poule, pk=pool_id)
     return render(request, 'tournaments/poule_detail.html', {'poule': pool})
+
+def matchDetail(request, match_id):
+    match = get_object_or_404(Match, pk=match_id)
+    return render(request, 'tournaments/match_detail.html', {'match': match})
+

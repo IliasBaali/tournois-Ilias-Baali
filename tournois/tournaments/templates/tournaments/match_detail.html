@@ -1,0 +1,12 @@
+{% if match %}
+    <p> {{match}} : </p>
+  
+        <table>
+            <th>{{match.team_1}}</th>
+            <th>{{match.team_2}}</th>
+            <td>{{match.score_1}}</td>
+            <td>{{match.score_2}}</td>
+        </table>
+{% else %}
+    <p>Ce match n'existe pas.</p>
+{% endif %}

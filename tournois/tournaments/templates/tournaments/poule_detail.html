@@ -1,5 +1,5 @@
 {% if poule %}
-    <p> {{poule}} : </p>
+    <p> Equipes de la {{poule}} : </p>
     {% if poule.teams %}
         <ul>
         {% for team in poule.teams.all %}
@@ -10,6 +10,15 @@
         <p>Cette poule ne contient aucun équipe actuellement.
         </p> 
     {%endif%}
+
+    {% if poule.match_set.all %}
+    <p>Matchs de la poule :</p> 
+    <ul>
+        {% for match in poule.match_set.all %}
+            <li><a href="{%url 'tournaments:match_detail' match.id%}">{{match}}</a></li>
+        {% endfor %}
+        </ul>
+        {%endif%}   
 {% else %}
     <p>Cette poule n'existe pas.</p>
 {% endif %}
