@@ -5,7 +5,11 @@ from .models import Tournoi, Poule, Match
 # Create your views here.
 def tournois(request):
     tournois_list = get_list_or_404(Tournoi)
-    return render(request, 'tournaments/tournois.html', {'tournois_list': tournois_list})
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else : 
+        user_name = None
+    return render(request, 'tournaments/tournois.html', {'tournois_list': tournois_list, 'username':user_name})
 
 def tournoiDetail(request, tournament_id):
     tournament = get_object_or_404(Tournoi, pk=tournament_id)
