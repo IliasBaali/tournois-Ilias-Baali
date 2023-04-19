@@ -34,7 +34,7 @@ def matchDetail(request, match_id):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = Commentaire.objects.create(
-            author = request.user.username,
+            author = request.user,
             match = match,
             date_time = timezone.now(),
             content = form.cleaned_data['comment'])

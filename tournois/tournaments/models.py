@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -48,7 +49,7 @@ class Match(models.Model):
     
     
 class Commentaire(models.Model):
-    author = models.CharField(max_length=200)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     date_time = models.DateTimeField('Publication date', auto_now=False, auto_now_add=False)
     content = models.CharField(max_length=500)
