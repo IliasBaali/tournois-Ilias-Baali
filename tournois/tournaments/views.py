@@ -5,7 +5,7 @@ from .forms import CommentForm
 from django.utils import timezone
 
 def context_with_user(request, context):
-    
+    "Method that adds the username of a connected user to the specified context"
     if request.user.is_authenticated:
         username = request.user.username
     else : 
@@ -15,18 +15,39 @@ def context_with_user(request, context):
 
 # Create your views here.
 def tournois(request):
+    """
+    Get all tournaments from database
+    :param request: The incoming request
+    """
     tournois_list = get_list_or_404(Tournoi)
     return render(request, 'tournaments/tournois.html', context_with_user(request,{'tournois_list': tournois_list}))
 
 def tournoiDetail(request, tournament_id):
+    """
+    Get the specified tournament
+    :param request: The incoming request
+    :param tournament_id: The tournament's ID
+    """
     tournament = get_object_or_404(Tournoi, pk=tournament_id)
     return render(request, 'tournaments/tournoi_detail.html', context_with_user(request,{'tournoi': tournament}))
 
 def pouleDetail(request, pool_id):
+    """
+    Get the specified pool
+    :param request: The incoming request
+    :param tournament_id: The pool's ID
+    """
     pool = get_object_or_404(Poule, pk=pool_id)
     return render(request, 'tournaments/poule_detail.html', context_with_user(request,{'poule': pool}))
 
 def matchDetail(request, match_id, comment_id = None):
+    """
+    Get the details of the specified match. If a POST request is submitted, it creates a comment or edits the one
+    specified by comment_id.
+    :param request: The incoming request
+    :param match_id: The match's ID
+    :param comment_id: The comment to edit's ID. If None, we display a form to create a new comment.
+    """
     match = get_object_or_404(Match, pk=match_id)
     
     if request.method == "POST":
@@ -44,6 +65,7 @@ def matchDetail(request, match_id, comment_id = None):
             form = CommentForm()
 
             if comment_id:
+                #if we edited a comment, we want to go back to the basic match_detail url
                 return redirect("tournaments:match_detail", match_id= match_id)
     else :
         if comment_id :
