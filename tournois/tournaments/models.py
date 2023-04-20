@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Tournoi(models.Model):
+    "A tournament"
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200, null=True)
     start_date = models.DateTimeField("Start date", null = True)
@@ -15,12 +16,14 @@ class Tournoi(models.Model):
         return self.name
     
 class Team(models.Model):
+    "A team, that can take part in multiple tournament"
     name = models.CharField("Name of the team", max_length=200)
     coach_name = models.CharField("Name of the coach", max_length=200)
     def __str__(self) -> str:
         return self.name
     
 class Poule(models.Model):
+    "A pool of a specific tournament, that contains teams"
     pool_number = models.IntegerField("Pool number")
     tournament = models.ForeignKey("Tournoi", verbose_name=("Tournament"), on_delete=models.CASCADE)
     teams = models.ManyToManyField(Team)   
@@ -29,12 +32,14 @@ class Poule(models.Model):
     #TODO: liste des matchs, calcul du classement
     
 class Player(models.Model):
+    "A player, member of a team (not used for the moment)"
     name = models.CharField(max_length=200)
     team = models.ForeignKey(Team, verbose_name=("Team"), on_delete=models.CASCADE)
     def __str__(self) -> str:
         return self.name
     
 class Match(models.Model):
+    "A match, that opposes two teams"
     date = models.DateField("Date of the match")
     time = models.TimeField("Time of the match")
     location = models.CharField(max_length=200)
@@ -49,6 +54,7 @@ class Match(models.Model):
     
     
 class Commentaire(models.Model):
+    "A comment about a match, posted by an authenticated author"
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     date_time = models.DateTimeField('Publication date', auto_now=False, auto_now_add=False)

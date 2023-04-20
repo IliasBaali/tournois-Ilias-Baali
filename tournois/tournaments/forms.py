@@ -1,9 +1,8 @@
-from django import forms
+from django.forms import ModelForm
+from .models import Commentaire
 
-
-class CommentForm(forms.Form):
-    comment = forms.CharField(  
-        label="Commentaire :",
-        max_length=500,
-        widget=forms.TextInput(attrs={"placeholder": "..."}),
-    )
+class CommentForm(ModelForm):
+    class Meta:
+        model = Commentaire
+        exclude = ['author', 'match', 'date_time']
+        labels = {'content':"Commentez"}
