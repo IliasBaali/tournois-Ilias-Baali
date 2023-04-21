@@ -6,14 +6,32 @@
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid">
+    <h3>Tournois </h3>
+    
+    
+    <hr>
+    {% if tournois_list %}
+        {% for tournoi in tournois_list %}
+            <div class="container-fluid">
+                <h4 class="my-2"><a href="{% url 'tournaments:tournoi_detail' tournoi.id %}">{{tournoi.name}}</a></h4>
+                <div class="row ">
+                    <div class="col-md-auto"><p class="fw-bold" >Lieu : </p></div>
+                    <div class="col-md-auto "><p>{{tournoi.location}} </p></div>
+                </div>
+                <div class="row" style="margin-top:-17px">
+                    <div class="col-md-auto"><p class="fw-bold" >Dates : </p></div>
+                    {%if tournoi.start_date%}
+                    <div class="col-md-auto "><p>Du {{tournoi.start_date}} au {{tournoi.end_date}} </p></div>
+                    {%endif%}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Aucun tournoi disponible actuellement.</p>
+    {% endif %}
+    
+    <hr>
+</div>
 
-{% if tournois_list %}
-    <ul>
-    {% for tournoi in tournois_list %}
-        <li><a href="{% url 'tournaments:tournoi_detail' tournoi.id %}">{{tournoi.name}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No tournament are available.</p>
-{% endif %}
 {% endblock content %}

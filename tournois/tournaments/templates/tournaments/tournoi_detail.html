@@ -7,17 +7,28 @@
 
 {% block content %}
 
+<div class="container-fluid">
+    <h3>{{tournoi}} </h3>
+    
+<hr>
+    
 {% if tournoi %}
     {% if tournoi.poule_set %}
-        <ul>
         {% for poule in tournoi.poule_set.all %}
-            <li><a href="{% url 'tournaments:poule_detail' poule.id%}">{{poule}}</a></li>
+            <div class="container-fluid">
+                <h4 class="my-2"><a href="{% url 'tournaments:poule_detail' poule.id %}">{{poule}}</a></h4>
+                <div class="row ">
+                    <div class="col-md-auto"><p class="fw-bold">Equipes :</p></div>
+                    {%for team in poule.teams.all%}
+                        <div class="col-md-auto"><p>{{team}}</p></div>
+                    {%endfor%}
+                </div>
+            </div>
         {% endfor %}
-        </ul>
     {% else %}
-        <p>No pool in this tournament.</p> 
-    {%endif%}
-{% else %}
-    <p>This tournament does not exist.</p>
-{% endif %}
+        <p>Aucune poule n'est disponible actuellement.</p>
+    {% endif %}
+{%endif%}
+    <hr>
+</div>
 {% endblock content %}

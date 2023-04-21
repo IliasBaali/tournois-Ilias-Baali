@@ -36,8 +36,24 @@
 {% block content %}
 
 {% if match %}
-    <p> {{match}} : </p>
-  
+
+    <div class="container-fluid border m-3" >
+        <h6 class="my-2"><p>{{match}}</p></h6>
+        <div class="row ">
+            <div class="col-md-auto"><p class="fw-bold" >Lieu : </p></div>
+            <div class="col-md-auto "><p>{{match.location}} </p></div>
+        </div>
+        <div class="row" style="margin-top:-17px">
+            <div class="col-md-auto"><p class="fw-bold" >Date : </p></div>
+            {%if match.date and match.time%}
+            <div class="col-md-auto "><p>{{match.date}}, à {{match.time}} </p></div>
+            {%elif match.date%}
+            <div class="col-md-auto "><p>{{match.date}}, heure non définie </p></div>
+            {%else%}
+            <div class="col-md-auto "><p>Non fixée</p></div>
+            {%endif%}
+        </div>
+    </div>
         <table>
             <tbody>
             <tr>
@@ -50,8 +66,10 @@
             </tr>
         </tbody>
         </table>
+    </div>
+    <div class="container-fluid m-3">
 
-        <p>Commentaires : </p>
+        <h5><p>Commentaires : </p></h5>
         {%if match.commentaire_set.all%}
             {%for comment in match.commentaire_set.all%}
                 {%if comment.id == comment_id %}

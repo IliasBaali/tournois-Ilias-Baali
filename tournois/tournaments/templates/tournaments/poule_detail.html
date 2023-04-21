@@ -8,28 +8,68 @@
 
 {% block content %}
 
-
 {% if poule %}
-    <p> Equipes de la {{poule}} : </p>
+<div class="container-fluid">
+    <h3>{{poule}} </h3>
+    
+<hr>
+<div class="container-fluid py-2">
+    <h5> Equipes : </h5>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Coach</th>
+            <th scope="col">Victoires</th>
+            <th scope="col">Défaites</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for team in poule.teams.all %}        
+            <tr>
+                <th scope="row">{{team.name}}</th>
+                <td>{{team.coach_name}}</td>
+                <td></td>
+                <td></td>   
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
     {% if poule.teams %}
         <ul>
-        {% for team in poule.teams.all %}
-            <li>Equipe {{team.name}}, entraînée par {{team.coach_name}}</li>
-        {% endfor %}
+        
         </ul>
     {% else %}
         <p>Cette poule ne contient aucun équipe actuellement.
         </p> 
     {%endif%}
-
+    </div>
+    <div class="container-fluid py-2">
     {% if poule.match_set.all %}
-    <p>Matchs de la poule :</p> 
+    <h5>Matchs de la poule :</h5> 
     <ul>
         {% for match in poule.match_set.all %}
-            <li><a href="{%url 'tournaments:match_detail' match.id%}">{{match}}</a></li>
+        <div class="container-fluid">
+            <h6 class="my-2"><a href="{%url 'tournaments:match_detail' match.id%}">{{match}}</a></h6>
+            <div class="row ">
+                <div class="col-md-auto"><p class="fw-bold" >Lieu : </p></div>
+                <div class="col-md-auto "><p>{{match.location}} </p></div>
+            </div>
+            <div class="row" style="margin-top:-17px">
+                <div class="col-md-auto"><p class="fw-bold" >Date : </p></div>
+                {%if match.date and match.time%}
+                <div class="col-md-auto "><p>{{match.date}}, à {{match.time}} </p></div>
+                {%elif match.date%}
+                <div class="col-md-auto "><p>{{match.date}}, heure non définie </p></div>
+                {%else%}
+                <div class="col-md-auto "><p>Non fixée</p></div>
+                {%endif%}
+            </div>
+        </div>
         {% endfor %}
-        </ul>
-        {%endif%}   
+    </ul>
+    {%endif%}   
+    </div>
 {% else %}
     <p>Cette poule n'existe pas.</p>
 {% endif %}

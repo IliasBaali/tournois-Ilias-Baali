@@ -19,8 +19,10 @@ class Team(models.Model):
     "A team, that can take part in multiple tournament"
     name = models.CharField("Name of the team", max_length=200)
     coach_name = models.CharField("Name of the coach", max_length=200)
+    
     def __str__(self) -> str:
         return self.name
+    
     
 class Poule(models.Model):
     "A pool of a specific tournament, that contains teams"
@@ -28,8 +30,18 @@ class Poule(models.Model):
     tournament = models.ForeignKey("Tournoi", verbose_name=("Tournament"), on_delete=models.CASCADE)
     teams = models.ManyToManyField(Team)   
     def __str__(self) -> str:
-        return "Pool " + str(self.pool_number) + ", " + str(self.tournament)
+        return "Poule " + str(self.pool_number) + ", " + str(self.tournament)
     #TODO: liste des matchs, calcul du classement
+    def get_score_list(self):
+        score_list = []
+        for team in self.teams:
+            score_list[team.name] = 0
+        for match in self.match_set.all():
+            winner = match.get_winner()
+            if winner :
+                score_list[winner.name] += 1
+        return score_list
+            
     
 class Player(models.Model):
     "A player, member of a team (not used for the moment)"
@@ -51,6 +63,14 @@ class Match(models.Model):
     
     def __str__(self) -> str:
         return str(self.team_1) + " VS " + str(self.team_2)
+    
+    def get_winner(self):
+        if not self.score_1 or not self.score_2:
+            return None
+        if self.score_1 >= self.score_2:
+            return self.team_1
+        if self.score_2 >= self.score_1:
+            return self.team_2
     
     
 class Commentaire(models.Model):
