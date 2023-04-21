@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
+{% block navbar_items %}
+<li class="nav-item"><a class="nav-link" href="{%url 'tournaments:tournois'%}">Tournois</a></li>
+<li class="nav-item"><a class="nav-link" href="{%url 'tournaments:tournoi_detail' poule.tournament.id%}">{{poule.tournament}}</a></li>
+<li class="nav-item"><a class="nav-link active" href="">Poule {{poule.pool_number}}</a></li>
+{% endblock %}
+
+
 {% block content %}
+
 
 {% if poule %}
     <p> Equipes de la {{poule}} : </p>

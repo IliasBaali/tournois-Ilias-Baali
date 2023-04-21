@@ -4,28 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Tournois{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
     {% block head %}{% endblock %}
 </head>
 
-<body>
-    <div>
-        <div >
-            <header>
-                {% if username %}
-                    <p>Bonjour {{username}}</p>
-                    <form action="{%url 'logout'%}">
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <button type="submit">Déconnection</button>
-                    </form>
-                {% else %}
-                    <form action="{%url 'login'%}">
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <button type="submit">Connection</button>
-                    </form>
-                {% endif %}
-            </header>
-        </div>
+<header>
+    
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
 
+    <div class="container-fluid collapse navbar-collapse">
+        <!-- Links -->
+        <ul class="nav navbar-nav">
+            {% block navbar_items %}{% endblock %}
+        </ul>
+        <div class="nav navbar-nav navbar-right my-1 ">
+             
+        {% if username %}
+            
+            <form action="{%url 'logout'%}" class="form-inline d-flex mx-1">
+                <label for="next" class="navbar-text mx-2 ">Bonjour {{username}} </label>
+                <input class="form-control me-2" type="hidden" name="next" value="{{ request.path }}">
+                <button type="submit" class="btn btn-outline-success">Déconnection</button>
+            </form>
+        {% else %}
+            <form action="{%url 'login'%}" class="form-inline d-flex mx-1">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button type="submit" class="btn btn-primary navbar-btn">Connection</button>
+            </form>
+        {% endif %}
+        
+        </div>
+           
+        </div>
+    </nav>
+ </header>
+ <body>     
         {% block content %}{% endblock %}
 
         <div>
@@ -33,7 +48,7 @@
                 <em>&copy; ISAE-SUPAERO</em>
             </footer>
         </div>
-    </div>
     
 </body>
+
 </html>
